@@ -1,0 +1,184 @@
+<form [formGroup]="purchaseOrderForm">
+    <nz-card>
+      <nz-row nzGutter="16">
+        <nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzSpan="8" nzRequired>REF. ID</nz-form-label>
+            <nz-form-control nzSpan="16">
+              <input
+                (focusout)="format()"
+                formControlName="referenceId"
+                nz-input
+                placeholder="REF. ID"
+                type="number"
+                min="1"
+                required
+              />
+              <div *ngIf="purchaseOrderForm.get('referenceId').invalid && (purchaseOrderForm.get('referenceId').dirty || purchaseOrderForm.get('referenceId').touched)" class="error-message">
+                <div *ngIf="purchaseOrderForm.get('referenceId').errors?.required">REF. ID is required.</div>
+                <div *ngIf="purchaseOrderForm.get('referenceId').errors?.min">REF. ID must be greater than 0.</div>
+              </div>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzSpan="8" nzRequired>PO NO</nz-form-label>
+            <nz-form-control nzSpan="16">
+              <input formControlName="purchaseOrderNumber" nz-input placeholder="PO Number" />
+              <div *ngIf="purchaseOrderForm.get('purchaseOrderNumber').invalid && (purchaseOrderForm.get('purchaseOrderNumber').dirty || purchaseOrderForm.get('purchaseOrderNumber').touched)" class="error-message">
+                <div *ngIf="purchaseOrderForm.get('purchaseOrderNumber').errors?.required">PO NO is required.</div>
+              </div>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+      
+      <nz-row nzGutter="16">
+        <nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzSpan="8" nzRequired>PO DATE</nz-form-label>
+            <nz-form-control nzSpan="16">
+              <nz-date-picker formControlName="purchaseOrderDate" style="width: 100%"></nz-date-picker>
+              <div *ngIf="purchaseOrderForm.get('purchaseOrderDate').invalid && (purchaseOrderForm.get('purchaseOrderDate').dirty || purchaseOrderForm.get('purchaseOrderDate').touched)" class="error-message">
+                <div *ngIf="purchaseOrderForm.get('purchaseOrderDate').errors?.required">PO DATE is required.</div>
+              </div>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzSpan="8" nzRequired>SUPPLIER</nz-form-label>
+            <nz-form-control nzSpan="16">
+              <nz-select [nzAllowClear]="true" formControlName="supplier" nzPlaceHolder="Select Supplier" nzSize="small">
+                <nz-option *ngFor="let item of suppliers" [nzLabel]="item.text" [nzValue]="item.value"></nz-option>
+              </nz-select>
+              <div *ngIf="purchaseOrderForm.get('supplier').invalid && (purchaseOrderForm.get('supplier').dirty || purchaseOrderForm.get('supplier').touched)" class="error-message">
+                <div *ngIf="purchaseOrderForm.get('supplier').errors?.required">SUPPLIER is required.</div>
+              </div>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+      
+      <nz-row nzGutter="16">
+        <nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzSpan="8" nzRequired>EXPECTED DATE</nz-form-label>
+            <nz-form-control nzSpan="16">
+              <nz-date-picker formControlName="expectedDate" style="width: 100%"></nz-date-picker>
+              <div *ngIf="purchaseOrderForm.get('expectedDate').invalid && (purchaseOrderForm.get('expectedDate').dirty || purchaseOrderForm.get('expectedDate').touched)" class="error-message">
+                <div *ngIf="purchaseOrderForm.get('expectedDate').errors?.required">EXPECTED DATE is required.</div>
+              </div>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzSpan="8">REMARKS</nz-form-label>
+            <nz-form-control nzSpan="16">
+              <textarea formControlName="remarks" nz-input placeholder="Remarks" rows="3"></textarea>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        
+      </nz-row>
+      
+    </nz-card>
+  </form>
+  <form [formGroup]="purchaseOrderDetailForm">
+    <nz-card>
+      <nz-row [nzGutter]="16">
+        <nz-col [nzSpan]="8">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="10" nzRequired>ITEM</nz-form-label>
+            <nz-form-control [nzSpan]="14">
+              <nz-select [nzAllowClear]="true" formControlName="lineItem" nzPlaceHolder="Select Item" nzSize="small">
+                <nz-option *ngFor="let item of lineItems" [nzLabel]="item.text" [nzValue]="item.value"></nz-option>
+              </nz-select>
+              <div *ngIf="purchaseOrderDetailForm.get('lineItem').invalid && (purchaseOrderDetailForm.get('lineItem').dirty || purchaseOrderDetailForm.get('lineItem').touched)" class="error-message">
+                <div *ngIf="purchaseOrderDetailForm.get('lineItem').errors.required">Item selection is required.</div>
+              </div>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzSpan]="5">
+          <nz-form-item>
+            <nz-form-label nzFor="quantity" [nzSpan]="10" nzRequired>QTY.</nz-form-label>
+            <nz-form-control [nzSpan]="14">
+              <input formControlName="quantity" nz-input placeholder="Quantity" type="number" min="0" required />
+              <div *ngIf="purchaseOrderDetailForm.get('quantity').invalid && (purchaseOrderDetailForm.get('quantity').dirty || purchaseOrderDetailForm.get('quantity').touched)" class="error-message">
+                <div *ngIf="purchaseOrderDetailForm.get('quantity').errors.required">Quantity is required.</div>
+                <div *ngIf="purchaseOrderDetailForm.get('quantity').errors.min">Quantity must be greater than 0.</div>
+              </div>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzSpan]="5">
+          <nz-form-item>
+            <nz-form-label nzFor="rate" [nzSpan]="10" nzRequired>RATE ($)</nz-form-label>
+            <nz-form-control [nzSpan]="14">
+              <input formControlName="rate" nz-input placeholder="Rate" type="number" min="0" required />
+              <div *ngIf="purchaseOrderDetailForm.get('rate').invalid && (purchaseOrderDetailForm.get('rate').dirty || purchaseOrderDetailForm.get('rate').touched)" class="error-message">
+                <div *ngIf="purchaseOrderDetailForm.get('rate').errors.required">Rate is required.</div>
+                <div *ngIf="purchaseOrderDetailForm.get('rate').errors.min">Rate must be greater than 0.</div>
+              </div>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzSpan]="4">
+          <nz-form-item>
+            <nz-form-control>
+              <button (click)="addItem()" nz-button nzType="primary" nzShape="circle" [nzSize]="size" nzTooltip nzTooltipTitle="Add" [disabled]="!purchaseOrderDetailForm.valid">
+                <span nz-icon nzType="plus"></span>
+              </button>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+    </nz-card>
+  </form>
+  
+  <nz-card>
+    <nz-table #editRowTable [nzData]="items" [nzBordered]="true">
+      <thead>
+        <tr>
+          <th>ITEM NAME</th>
+          <th>QTY.</th>
+          <th>RATE ($)</th>
+          <th>EDIT</th>
+          <th>DELETE</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of items; let i = index">
+          <td>{{ item.lineItemName }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>{{ item.rate }}</td>
+          <td>
+            <button nz-button nzType="default" nzShape="circle" nz-tooltip nzTooltipTitle="Edit" (click)="editItem(i)">
+              <i nz-icon nzType="edit" theme="outline"></i>
+            </button>
+          </td>
+          <td>
+            <button nz-button nzType="default" nzShape="circle" nz-tooltip nzTooltipTitle="Delete" (click)="deleteItem(i)">
+              <i nz-icon nzType="delete" theme="outline"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+    <br>
+    <nz-row>
+      <nz-col nzSpan="24">
+        <div style="display: flex; justify-content: flex-end; gap: 8px;">
+          <button nz-button nzType="primary" (click)="update()" [disabled]="!purchaseOrderForm.valid || items.length === 0">UPDATE</button>
+          <button nz-button nzType="primary" nzDanger (click)="close()">CLOSE</button>
+        </div>
+      </nz-col>
+    </nz-row>
+    
+  </nz-card>
+  
+  
+  

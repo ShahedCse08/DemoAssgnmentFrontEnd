@@ -1,0 +1,24 @@
+<div class="header">
+    <div class="logo logo-dark">
+       
+    </div>
+    <div class="logo logo-white">
+      
+    </div>
+    <div class="nav-wrap">
+        <ul class="nav-left">
+            <li class="desktop-toggle">
+                <a (click)="toggleFold()">
+                    <i nz-icon [nzType]="isFolded? 'menu-unfold':'menu-fold'" theme="outline"></i>
+                </a>
+            </li>
+            <li class="mobile-toggle">
+                <a (click)="toggleExpand()">
+                    <i nz-icon [nzType]="isExpand? 'menu-fold': 'menu-unfold'" theme="outline"></i>
+                </a>
+            </li>
+          
+        </ul>
+      
+    </div>
+</div>    

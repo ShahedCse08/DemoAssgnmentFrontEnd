@@ -1,0 +1,27 @@
+/* styles.css */
+.nz-card {
+    margin: 20px;
+  }
+  
+  .nz-form-item {
+    margin-bottom: 16px;
+  }
+  
+  .nz-table {
+    margin-top: 20px;
+  }
+  
+  button[nz-button] {
+    margin-right: 8px;
+  }
+  
+  .large-icon {
+    font-size: 24px; /* Adjust the size as needed */
+  }
+
+
+  .error-message {
+    color: red;
+    margin-top: 4px;
+  }
+
